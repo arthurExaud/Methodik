@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorScreenBackground"
+    android:orientation="vertical"
+    android:padding="@dimen/app_padding">
+
+    <TextView
+        android:id="@+id/edit_text_task_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text="@string/title_edit_task"
+        android:textColor="@color/colorAccent"
+        android:paddingBottom="@dimen/textview_set_alarm_padding"
+        android:textSize="@dimen/title" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/edit_task_text"
+            style="@style/text_view_style"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/text_view_height"
+            tools:ignore="MissingConstraints"
+            tools:text="@string/placeholder_text" />
+
+        <View
+            android:id="@+id/view_task_color_change"
+            android:layout_width="@dimen/view_width"
+            android:layout_height="@dimen/button_view"
+            android:layout_marginRight="@dimen/margin_right"
+            android:background="@drawable/layout_button_recyclerview"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/edit_task_text"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <include layout="@layout/color_preference_evaluator" />
+
+    <Button
+        android:id="@+id/button_save"
+        style="@style/button_style"
+        android:layout_marginTop="@dimen/margin_between_views"
+        android:text="@string/button_save"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/color_preference_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_between_views">
+
+        <View
+            android:layout_marginTop="@dimen/margin_between_views"
+            android:layout_marginBottom="@dimen/margin_between_views"
+            android:background="@color/colorPrimaryLight"
+            android:layout_height="@dimen/view_alarm_height"
+            android:paddingTop="@dimen/textview_set_alarm_padding"
+            android:layout_width="match_parent"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/alarm_text_view"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/margin_between_views"
+            android:layout_height="@dimen/set_alarm_textview_height"
+            android:layout_margin="@dimen/textview_set_alarm_padding"
+            android:background="@color/colorScreenBackground"
+            android:paddingTop="@dimen/textview_set_alarm_padding"
+            android:text="@string/set_alarm"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_alarm"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            />
+
+        <Switch
+            android:id="@+id/switch_on_alarm"
+            android:layout_width="@dimen/switch_width"
+            android:layout_height="@dimen/switch_height"
+            android:text="On"
+            android:textAlignment="center"
+            android:textSize="@dimen/text_size_alarm_switch"
+            android:background="@drawable/layout_recyclerview"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/schedule_button"
+            app:layout_constraintStart_toStartOf="@+id/alarm_text_view"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.75"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+        <Button
+            android:id="@+id/schedule_button"
+            android:layout_width="@dimen/alarm_button_width"
+            android:layout_height="@dimen/alarm_button_height"
+            android:onClick="showTimePickerDialog"
+            android:background="@drawable/layout_recyclerview"
+            android:textColor="@color/black"
+            android:text="@string/set_time"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/alarm_text_view"
+            app:layout_constraintStart_toEndOf="@+id/switch_on_alarm"
+            app:layout_constraintTop_toTopOf="@+id/alarm_text_view"
+            app:layout_constraintVertical_bias="0.75" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

@@ -1,0 +1,50 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/color_preference_bar"
+    android:layout_marginTop="@dimen/margin_between_views"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/textView"
+        style="@style/text_view_style"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_height"
+        android:text="@string/choose_preference_color"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/red_button"
+        android:layout_width="@dimen/view_width"
+        android:layout_height="@dimen/color_text_view"
+        android:layout_marginEnd="@dimen/margin_right"
+        android:backgroundTint="@color/red_background"
+        android:onClick="changeBackground"
+        android:tag="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/yellow_button"
+        android:layout_width="@dimen/view_width"
+        android:layout_height="@dimen/color_text_view"
+        android:layout_marginEnd="@dimen/margin_right"
+        android:backgroundTint="@color/yellow_background"
+        android:onClick="changeBackground"
+        android:tag="2"
+        app:layout_constraintEnd_toStartOf="@+id/red_button"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/green_button"
+        android:layout_width="@dimen/view_width"
+        android:layout_height="@dimen/color_text_view"
+        android:layout_marginEnd="@dimen/margin_right"
+        android:backgroundTint="@color/blue_background"
+        android:onClick="changeBackground"
+        android:tag="3"
+        app:layout_constraintEnd_toStartOf="@+id/yellow_button"
+        tools:ignore="MissingConstraints" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

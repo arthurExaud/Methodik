@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/padding_recyclerview">
+
+    <TextView
+        android:id="@+id/textView"
+        style="@style/text_view_style"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/text_view_height"
+        android:background="@drawable/layout_recyclerview"
+        android:textAlignment="gravity"
+        tools:text="placeholder text"
+        tools:ignore="MissingConstraints" />
+
+    <View
+        android:id="@+id/recycler_view_color"
+        android:layout_width="@dimen/view_width"
+<<<<<<< Updated upstream
+        android:layout_height="@dimen/text_view_height"
+=======
+        android:layout_height="@dimen/button_view"
+>>>>>>> Stashed changes
+        android:layout_marginRight="@dimen/margin_right"
+        android:background="@drawable/layout_button_recyclerview"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

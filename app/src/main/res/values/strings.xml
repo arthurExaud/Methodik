@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Methodik</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="button_save">Save</string>
+    <string name="empty_not_saved">Not saved because it is empty.</string>
+    <string name="clear_all_lists">Clear all Lists</string>
+    <string name="delete_preamble">Deleting </string>
+    <string name="clear_data_toast_text">Clear the data now!</string>
+    <string name="no_panel">No List</string>
+    <string name="unable_to_update">Unable to update the List</string>
+
+    <string name="action_contact">Contact</string>
+    <string name="action_favorites">Favorites</string>
+    <string name="action_status">Status</string>
+    <string name="settings">Settings</string>
+    <string name="title_add_panel">Add Your New List Below</string>
+    <string name="title_edit_panel">Edit Your Panel Below</string>
+    <string name="title_add_task">Add Your New Task Below</string>
+    <string name="title_edit_task">Edit Your Task Below</string>
+    <string name="no_task">No task</string>
+    <string name="hint_edit">New List…</string>
+    <string name="hint_add_task">New Task…</string>
+    <string name="panel_name">PanelName</string>
+    <string name="add_new_task">Added New Task</string>
+    <string name="edited_task">Task Edited</string>
+    <string name="panel_updated">Panel Updated</string>
+    <string name="panel_created">List Created</string>
+    <string name="task_updated">Task Updated</string>
+    <string name="importance_rate">Importance Rate</string>
+    <string name="choose_preference_color">Preference Color</string>
+    <string name="placeholder_text">Place holder</string>
+    <string name="put_incial_data_text">Putting Random data!</string>
+    <string name="set_alarm">Set Alarm</string>
+    <string name="set_time">Schedule</string>
+    <string name="alarm_message">This is an alarminho</string>
+    <string name="cancel_alarm">Cancel Alarm</string>
+</resources>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="margin_between_views">16dp</dimen>
+    <dimen name="margin_right">12dp</dimen>
+    <dimen name="app_padding">20dp</dimen>
+    <dimen name="text_size">40sp</dimen>
+
+
+    <dimen name="view_width">24dp</dimen>
+<<<<<<< Updated upstream
+    <dimen name="text_view_height">68dp</dimen>
+    <dimen name="view_height">64dp</dimen>
+=======
+    <dimen name="view_height">60dp</dimen>
+    <dimen name="text_view">60dp</dimen>
+    <dimen name="button_view">60dp</dimen>
+    <dimen name="color_text_view">58dp</dimen>
+>>>>>>> Stashed changes
+
+    <dimen name="alarm_view_height">130dp</dimen>
+    <dimen name="text_size_alarm">30sp</dimen>
+    <dimen name="text_size_alarm_switch">20sp</dimen>
+    <dimen name="textview_set_alarm_padding">5dp</dimen>
+    <dimen name="set_alarm_textview_height">110dp</dimen>
+    <dimen name="switch_width">100dp</dimen>
+    <dimen name="switch_height">40dp</dimen>
+    <dimen name="alarm_button_width">120dp</dimen>
+    <dimen name="alarm_button_height">40dp</dimen>
+    <dimen name="view_alarm_height">120dp</dimen>
+
+
+    <dimen name="title">25sp</dimen>
+    <dimen name="recycler_view_padding">4dp</dimen>
+    <dimen name="padding_recyclerview">2dp</dimen>
+    <dimen name="destination_alarm_height">360dp</dimen>
+    <dimen name="alarm_inner_destination_height">350dp</dimen>
+    <dimen name="destination_set_alarm_padding">50dp</dimen>
+
+</resources>
+
