@@ -1,0 +1,312 @@
+diff --git a/METHODIK pictures/1.jpg b/METHODIK pictures/1.jpg
+new file mode 100644
+index 0000000..b9d0027
+Binary files /dev/null and b/METHODIK pictures/1.jpg differ
+diff --git a/METHODIK pictures/2.jpg b/METHODIK pictures/2.jpg
+new file mode 100644
+index 0000000..6204f0f
+Binary files /dev/null and b/METHODIK pictures/2.jpg differ
+diff --git a/METHODIK pictures/3.jpg b/METHODIK pictures/3.jpg
+new file mode 100644
+index 0000000..e33113d
+Binary files /dev/null and b/METHODIK pictures/3.jpg differ
+diff --git a/METHODIK pictures/4.jpg b/METHODIK pictures/4.jpg
+new file mode 100644
+index 0000000..9f568ac
+Binary files /dev/null and b/METHODIK pictures/4.jpg differ
+diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
+index 85b872d..d41302e 100644
+--- a/app/src/main/AndroidManifest.xml
++++ b/app/src/main/AndroidManifest.xml
+@@ -9,7 +9,7 @@
+         android:roundIcon="@mipmap/ic_launcher_round"
+         android:supportsRtl="true"
+         android:theme="@style/Theme.Methodik">
+-        <activity android:name=".view.DestinationActivity"></activity>
++        <activity android:name=".view.DestinationAlarmActivity"></activity>
+         <activity
+             android:name=".view.MainActivity"
+             android:theme="@style/Theme.Methodik.NoActionBar">
+@@ -25,7 +25,10 @@
+         <activity android:name=".view.TaskActivityEdit" />
+         <activity android:name=".view.TaskActivityAdd" />
+ 
+-        <receiver android:name=".model.AlarmReceiver" />
++        <receiver
++            android:name=".model.AlarmReceiver"
++            android:enabled="true"
++            android:exported="true"/>
+     </application>
+ 
+ </manifest>
+\ No newline at end of file
+diff --git a/app/src/main/java/com/arthurbritto/methodik/model/AlarmReceiver.java b/app/src/main/java/com/arthurbritto/methodik/model/AlarmReceiver.java
+index c35b669..2cba3e7 100644
+--- a/app/src/main/java/com/arthurbritto/methodik/model/AlarmReceiver.java
++++ b/app/src/main/java/com/arthurbritto/methodik/model/AlarmReceiver.java
+@@ -1,6 +1,5 @@
+ package com.arthurbritto.methodik.model;
+ 
+-import android.app.Notification;
+ import android.app.PendingIntent;
+ import android.content.BroadcastReceiver;
+ import android.content.Context;
+@@ -10,14 +9,14 @@ import androidx.core.app.NotificationCompat;
+ import androidx.core.app.NotificationManagerCompat;
+ 
+ import com.arthurbritto.methodik.R;
+-import com.arthurbritto.methodik.view.DestinationActivity;
++import com.arthurbritto.methodik.view.DestinationAlarmActivity;
+ 
+ public class AlarmReceiver extends BroadcastReceiver {
+ 
+     @Override
+     public void onReceive(Context context, Intent intent) {
+ 
+-        Intent i = new Intent(context, DestinationActivity.class);
++        Intent i = new Intent(context, DestinationAlarmActivity.class);
+         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,i,0);
+ 
+diff --git a/app/src/main/java/com/arthurbritto/methodik/model/MethodikRoomDatabase.java b/app/src/main/java/com/arthurbritto/methodik/model/MethodikRoomDatabase.java
+index 6c8da83..654d597 100644
+--- a/app/src/main/java/com/arthurbritto/methodik/model/MethodikRoomDatabase.java
++++ b/app/src/main/java/com/arthurbritto/methodik/model/MethodikRoomDatabase.java
+@@ -13,7 +13,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
+  * After the app creates the database, all further
+  * interactions with it happen through the ViewModels.
+  */
+-@Database(entities = {Panel.class, Task.class}, version = 2, exportSchema = false)
++@Database(entities = {Panel.class, Task.class}, version = 5, exportSchema = false)
+ public abstract class MethodikRoomDatabase extends RoomDatabase {
+ 
+     public abstract TaskDao taskDao();
+diff --git a/app/src/main/java/com/arthurbritto/methodik/view/PanelActivityEdit.java b/app/src/main/java/com/arthurbritto/methodik/view/PanelActivityEdit.java
+index e44bb2e..8d54285 100644
+--- a/app/src/main/java/com/arthurbritto/methodik/view/PanelActivityEdit.java
++++ b/app/src/main/java/com/arthurbritto/methodik/view/PanelActivityEdit.java
+@@ -60,9 +60,7 @@ public class PanelActivityEdit extends AppCompatActivity {
+         super.onCreate(savedInstanceState);
+ 
+         binding = ActivityPanelEditBinding.inflate(getLayoutInflater());
+-
+         setContentView(binding.getRoot());
+-
+         createNotificationChannel();
+ 
+         editPanelView = findViewById(R.id.edit_panel_text);
+@@ -111,7 +109,6 @@ public class PanelActivityEdit extends AppCompatActivity {
+         binding.scheduleButton.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+-
+                 showTimePicker();
+             }
+         });
+@@ -119,7 +116,6 @@ public class PanelActivityEdit extends AppCompatActivity {
+         binding.switchOnAlarm.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+-
+                 if(counter <= 0){
+                     setAlarm();
+                     counter++;
+@@ -149,7 +145,7 @@ public class PanelActivityEdit extends AppCompatActivity {
+         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+         Intent intent = new Intent(this, AlarmReceiver.class);
+         pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis() , AlarmManager.INTERVAL_DAY, pendingIntent);
++        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),pendingIntent);
+         Toast.makeText(this, "Alarm set Successfully", Toast.LENGTH_SHORT).show();
+     }
+ 
+diff --git a/app/src/main/res/layout/activity_panel_edit.xml b/app/src/main/res/layout/activity_panel_edit.xml
+index 946a337..bdd5405 100644
+--- a/app/src/main/res/layout/activity_panel_edit.xml
++++ b/app/src/main/res/layout/activity_panel_edit.xml
+@@ -34,7 +34,7 @@
+         <View
+             android:id="@+id/view_panel_color_change"
+             android:layout_width="@dimen/view_width"
+-            android:layout_height="@dimen/view_height"
++            android:layout_height="@dimen/button_view"
+             android:layout_marginRight="@dimen/margin_right"
+             android:background="@drawable/layout_button_recyclerview"
+             app:layout_constraintBottom_toBottomOf="parent"
+diff --git a/app/src/main/res/layout/activity_task_add.xml b/app/src/main/res/layout/activity_task_add.xml
+index be59cf9..6279dcb 100644
+--- a/app/src/main/res/layout/activity_task_add.xml
++++ b/app/src/main/res/layout/activity_task_add.xml
+@@ -11,7 +11,6 @@
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:ems="10"
+-        android:inputType="text"
+         android:text="@string/title_add_task"
+         android:textColor="@color/colorPrimaryLight"
+         android:textSize="@dimen/title_size" />
+diff --git a/app/src/main/res/layout/activity_task_edit.xml b/app/src/main/res/layout/activity_task_edit.xml
+index 35d2b3d..9895e42 100644
+--- a/app/src/main/res/layout/activity_task_edit.xml
++++ b/app/src/main/res/layout/activity_task_edit.xml
+@@ -34,7 +34,7 @@
+         <View
+             android:id="@+id/view_task_color_change"
+             android:layout_width="@dimen/view_width"
+-            android:layout_height="@dimen/view_height"
++            android:layout_height="@dimen/button_view"
+             android:layout_marginRight="@dimen/margin_right"
+             android:background="@drawable/layout_button_recyclerview"
+             app:layout_constraintBottom_toBottomOf="parent"
+diff --git a/app/src/main/res/layout/alarm_scheduler.xml b/app/src/main/res/layout/alarm_scheduler.xml
+index d2e1e0e..1527e5f 100644
+--- a/app/src/main/res/layout/alarm_scheduler.xml
++++ b/app/src/main/res/layout/alarm_scheduler.xml
+@@ -16,7 +16,7 @@
+         tools:ignore="MissingConstraints" />
+ 
+     <TextView
+-        android:id="@+id/alarm_view"
++        android:id="@+id/alarm_text_view"
+         android:layout_width="match_parent"
+         android:layout_marginTop="@dimen/margin_between_views"
+         android:layout_height="@dimen/set_alarm_textview_height"
+@@ -36,33 +36,33 @@
+         />
+ 
+     <Switch
+-        android:id="@+id/switch1"
++        android:id="@+id/switch_on_alarm"
+         android:layout_width="@dimen/switch_width"
+         android:layout_height="@dimen/switch_height"
+-        android:onClick="turnOnAlarm"
+         android:text="On"
++        android:onClick="setAlarm"
+         android:textAlignment="center"
+         android:textSize="@dimen/text_size_alarm_switch"
+-        android:background="@color/colorPrimaryLight"
++        android:background="@drawable/layout_recyclerview"
+         app:layout_constraintBottom_toBottomOf="parent"
+-        app:layout_constraintEnd_toStartOf="@+id/date_button"
+-        app:layout_constraintStart_toStartOf="@+id/alarm_view"
++        app:layout_constraintEnd_toStartOf="@+id/schedule_button"
++        app:layout_constraintStart_toStartOf="@+id/alarm_text_view"
+         app:layout_constraintTop_toTopOf="parent"
+         app:layout_constraintVertical_bias="0.75"
+         tools:ignore="UseSwitchCompatOrMaterialXml" />
+ 
+     <Button
+-        android:id="@+id/date_button"
++        android:id="@+id/schedule_button"
+         android:layout_width="@dimen/alarm_button_width"
+         android:layout_height="@dimen/alarm_button_height"
+         android:onClick="showTimePickerDialog"
+-        android:backgroundTint="@color/colorPrimaryLight"
++        android:background="@drawable/layout_recyclerview"
+         android:textColor="@color/black"
+         android:text="@string/set_time"
+         app:layout_constraintBottom_toBottomOf="parent"
+-        app:layout_constraintEnd_toEndOf="@+id/alarm_view"
+-        app:layout_constraintStart_toEndOf="@+id/switch1"
+-        app:layout_constraintTop_toTopOf="@+id/alarm_view"
++        app:layout_constraintEnd_toEndOf="@+id/alarm_text_view"
++        app:layout_constraintStart_toEndOf="@+id/switch_on_alarm"
++        app:layout_constraintTop_toTopOf="@+id/alarm_text_view"
+         app:layout_constraintVertical_bias="0.75" />
+ 
+ 
+diff --git a/app/src/main/res/layout/color_preference_evaluator.xml b/app/src/main/res/layout/color_preference_evaluator.xml
+index a9c044f..2970b96 100644
+--- a/app/src/main/res/layout/color_preference_evaluator.xml
++++ b/app/src/main/res/layout/color_preference_evaluator.xml
+@@ -17,7 +17,7 @@
+     <Button
+         android:id="@+id/red_button"
+         android:layout_width="@dimen/view_width"
+-        android:layout_height="@dimen/view_height"
++        android:layout_height="@dimen/color_text_view"
+         android:layout_marginEnd="@dimen/margin_right"
+         android:backgroundTint="@color/red_background"
+         android:onClick="changeBackground"
+@@ -28,7 +28,7 @@
+     <Button
+         android:id="@+id/yellow_button"
+         android:layout_width="@dimen/view_width"
+-        android:layout_height="@dimen/view_height"
++        android:layout_height="@dimen/color_text_view"
+         android:layout_marginEnd="@dimen/margin_right"
+         android:backgroundTint="@color/yellow_background"
+         android:onClick="changeBackground"
+@@ -39,7 +39,7 @@
+     <Button
+         android:id="@+id/green_button"
+         android:layout_width="@dimen/view_width"
+-        android:layout_height="@dimen/view_height"
++        android:layout_height="@dimen/color_text_view"
+         android:layout_marginEnd="@dimen/margin_right"
+         android:backgroundTint="@color/blue_background"
+         android:onClick="changeBackground"
+diff --git a/app/src/main/res/layout/recyclerview_item.xml b/app/src/main/res/layout/recyclerview_item.xml
+index 62e373a..0143c54 100644
+--- a/app/src/main/res/layout/recyclerview_item.xml
++++ b/app/src/main/res/layout/recyclerview_item.xml
+@@ -13,13 +13,18 @@
+         android:layout_width="match_parent"
+         android:layout_height="@dimen/text_view_height"
+         android:background="@drawable/layout_recyclerview"
++        android:textAlignment="gravity"
+         tools:text="placeholder text"
+         tools:ignore="MissingConstraints" />
+ 
+     <View
+         android:id="@+id/recycler_view_color"
+         android:layout_width="@dimen/view_width"
++<<<<<<< Updated upstream
+         android:layout_height="@dimen/text_view_height"
++=======
++        android:layout_height="@dimen/button_view"
++>>>>>>> Stashed changes
+         android:layout_marginRight="@dimen/margin_right"
+         android:background="@drawable/layout_button_recyclerview"
+         app:layout_constraintBottom_toBottomOf="parent"
+diff --git a/app/src/main/res/values/dimens.xml b/app/src/main/res/values/dimens.xml
+index f7190a8..f3be290 100644
+--- a/app/src/main/res/values/dimens.xml
++++ b/app/src/main/res/values/dimens.xml
+@@ -8,8 +8,15 @@
+ 
+ 
+     <dimen name="view_width">24dp</dimen>
++<<<<<<< Updated upstream
+     <dimen name="text_view_height">68dp</dimen>
+     <dimen name="view_height">64dp</dimen>
++=======
++    <dimen name="view_height">60dp</dimen>
++    <dimen name="text_view">60dp</dimen>
++    <dimen name="button_view">60dp</dimen>
++    <dimen name="color_text_view">58dp</dimen>
++>>>>>>> Stashed changes
+ 
+     <dimen name="alarm_view_height">130dp</dimen>
+     <dimen name="text_size_alarm">30sp</dimen>
+@@ -26,6 +33,9 @@
+     <dimen name="title">25sp</dimen>
+     <dimen name="recycler_view_padding">4dp</dimen>
+     <dimen name="padding_recyclerview">2dp</dimen>
++    <dimen name="destination_alarm_height">360dp</dimen>
++    <dimen name="alarm_inner_destination_height">350dp</dimen>
++    <dimen name="destination_set_alarm_padding">50dp</dimen>
+ 
+ </resources>
+ 
+diff --git a/app/src/main/res/values/strings.xml b/app/src/main/res/values/strings.xml
+index 8079ba1..a6bca08 100644
+--- a/app/src/main/res/values/strings.xml
++++ b/app/src/main/res/values/strings.xml
+@@ -33,4 +33,6 @@
+     <string name="put_incial_data_text">Putting Random data!</string>
+     <string name="set_alarm">Set Alarm</string>
+     <string name="set_time">Schedule</string>
++    <string name="alarm_message">This is an alarminho</string>
++    <string name="cancel_alarm">Cancel Alarm</string>
+ </resources>
